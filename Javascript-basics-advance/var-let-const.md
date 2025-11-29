@@ -294,8 +294,4 @@ Answer: Mostly for historical/legacy code. In modern JS, prefer `let` and `const
 
 ---
 
-If you want, I can also:
-- Add runnable JS files for each example and a small test runner (Node.js) to print the outputs exactly as shown.
-- Add additional tricky questions and deeper explanations on hoisting internals and engine behavior.
-
 
