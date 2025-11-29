@@ -1,4 +1,4 @@
-# JavaScript Hoisting Explained
+# JavaScript Hoisting
 
 Hoisting in JavaScript means **variables and function declarations are moved to the top of their scope during the compilation phase**, before code execution. Only declarations are hoisted — **not initializations**.
 
@@ -6,7 +6,7 @@ Hoisting in JavaScript means **variables and function declarations are moved to 
 
 ## 1. Variable Hoisting
 
-### ### `var`
+ ### `var`
 
 `var` declarations are hoisted **with default value `undefined`**.
 
