@@ -170,14 +170,96 @@ Macrotasks are executed **one per loop iteration**, and microtasks run after eac
 
 ```js
 setTimeout(() => console.log("macrotask"), 0);
-Promise.resolve().then(() => console.log
-The Event Loop enables JavaScript to appear asynchronous despite being single-threaded.  
-Understanding:
-- Microtasks vs Macrotasks
-- `nextTick`, Promises
-- Timers vs Immediate
-- Node.js event loop phases
+Promise.resolve().then(() => console.log("microtask"));
+```
 
-…is essential to predict execution order and debug async behavior like a pro.
+**Output:**
 
 ```
+microtask
+macrotask
+```
+
+---
+
+## Final Takeaway
+
+# JavaScript Event Loop Visual Diagram
+
+Below is a **visual ASCII diagram** representing how the Event Loop works, including:
+
+* Call Stack
+* Web/Node APIs
+* Microtask Queue
+* Macrotask Queue
+* Event Loop decision flow
+
+---
+
+## Event Loop Visual Diagram
+
+```
+               ┌───────────────────────────────┐
+               │          Call Stack           │
+               │  (Executes one frame at a     │
+               │           time)               │
+               └───────────────┬──────────────┘
+                               │
+                               ▼
+                  (Synchronous code runs)
+                               │
+               ┌───────────────┴──────────────┐
+               │        JavaScript APIs        │
+               │   (Web APIs / Node APIs)      │
+               │ setTimeout, I/O, fetch, etc.  │
+               └───────────────┬──────────────┘
+                               │
+     ┌─────────────────────────┼──────────────────────────┐
+     │                         │                          │
+     ▼                         ▼                          ▼
+┌──────────────┐     ┌────────────────┐        ┌────────────────────┐
+│ Microtask    │     │ Macrotask      │        │   setImmediate     │
+│ Queue        │     │ Queue          │        │ (Node.js Check)    │
+│ (High prio)  │     │ (Callback Q)   │        │ Queue              │
+│ Promises     │     │ setTimeout     │        └────────────────────┘
+│ nextTick(*)  │     │ setInterval    │
+└──────────────┘     └────────────────┘
+     ▲                         ▲
+     │                         │
+     └───────────┬─────────────┘
+                 │
+                 ▼
+        ┌──────────────────────┐
+        │      Event Loop      │
+        │  (Picks next task)   │
+        └──────────────────────┘
+                 │
+     ┌───────────┴──────────────────────────────┐
+     │  1. If Call Stack is empty:               │
+     │       - Run all microtasks first          │
+     │       - Then run one macrotask            │
+     │  2. Repeat forever                        │
+     └───────────────────────────────────────────┘
+```
+
+---
+
+## Simplified Flow
+
+```
+1. Execute sync code (Call Stack)
+2. Move async callbacks to queues
+3. Event Loop checks Call Stack → if empty:
+      a. Run all Microtasks (Promises, nextTick)
+      b. Run one Macrotask (setTimeout, I/O)
+4. Repeat
+```
+
+---
+
+## Tip for Interviews
+
+> **Microtasks always run before macrotasks**, and `process.nextTick()` runs before all microtasks.
+
+This diagram helps you visualize why certain logs appear first even when timers are set to `0ms`.
+
