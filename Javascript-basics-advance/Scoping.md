@@ -1,4 +1,4 @@
-# JavaScript Scoping Explained
+# JavaScript Scoping
 
 Scoping defines **where a variable is accessible** in your program. It controls the *lifetime* and *visibility* of variables during execution.
 
