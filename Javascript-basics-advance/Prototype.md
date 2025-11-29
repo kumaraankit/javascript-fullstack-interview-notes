@@ -1,4 +1,4 @@
-# JavaScript Prototypes — Deep Understanding
+# JavaScript Prototypes
 
 Prototypes are the foundation of JavaScript’s inheritance model. Unlike classical languages (Java/C#), JavaScript uses **prototypal inheritance**: objects inherit directly from other objects.
 
