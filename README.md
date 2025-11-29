@@ -1,1 +1,1 @@
-# javascript-frontend-interview-questions
+# javascript-fullstack-interview-questions
