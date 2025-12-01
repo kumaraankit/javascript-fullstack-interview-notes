@@ -1,5 +1,3 @@
-# Question
-
 **How would you implement deep cloning of an object?**
 
 ---
