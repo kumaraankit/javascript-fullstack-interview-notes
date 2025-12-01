@@ -187,12 +187,3 @@ Trade-offs:
 > Design a scalable SPA by serving static assets from a CDN with long TTLs and hashed filenames, use SSR for critical routes and CSR for highly interactive parts, implement a BFF to shape API responses, adopt client-side caching (React Query) with optimistic updates, split code into route-level bundles, and use autoscaled stateless microservices behind a load balancer. Add observability (RUM, tracing), secure tokens and CSP, and CI/CD with canary deployments. For team-scale, consider micro-frontends.
 
 ---
-
-## 16. Further Reading / Tools
-
-* Frameworks: Next.js, Remix, Nuxt, Vite
-* State: Redux, Zustand, React Query, SWR
-* Monitoring: Sentry, Datadog RUM, New Relic
-* Streaming & pub/sub: Kafka, PubNub, Pusher
-
----
