@@ -1,4 +1,4 @@
-# SSR vs CSR vs SSG — Complete Explanation
+# SSR vs CSR vs SSG
 
 ## 1. CSR — Client-Side Rendering
 **Rendering Location:** Browser  
