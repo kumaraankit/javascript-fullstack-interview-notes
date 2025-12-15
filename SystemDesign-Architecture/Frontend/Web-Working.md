@@ -252,19 +252,7 @@ app.get('/users', (req, res) => {
 });
 ```
 
----
-
-## 16. Real Interview Questions Based on This
-
-* Explain event loop with diagram
-* Why JS is single-threaded?
-* How browser renders a page?
-* Difference between microtask and macrotask?
-* What blocks rendering?
-
----
-
-## 17. Summary
+## 16. Summary
 
 * Web works on **request–response** model
 * Browser renders HTML/CSS and executes JS
