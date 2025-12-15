@@ -1,7 +1,4 @@
 # Causes of Memory Leaks in Frontend Applications
-
-This document explains **what memory leaks are, why they happen in frontend (FE) applications, and how to prevent them**, with a strong **JavaScript + Browser internals** focus. It is written for **interview preparation (3–7+ years experience)**.
-
 ---
 
 ## 1. What Is a Memory Leak?
