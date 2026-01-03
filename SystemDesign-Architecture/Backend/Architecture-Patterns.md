@@ -1,208 +1,155 @@
 
-# System Design Architecture Patterns – Deep Dive (15–25+ lines each, with diagrams)
+# System Design Architecture Patterns – Deep Dive
 
-This document explains **major system design architecture patterns** with deep explanations.
-Each section covers **WHAT, WHY, HOW, WHEN**, plus **ASCII diagrams** to build strong system design intuition.
-This is suitable for **system design interviews, senior backend roles, and long-term reference**.
+This document is a long-term reference and interview preparation guide for system design architecture patterns.
+Each architecture includes deep definitions, motivations, internal working, real-world examples, trade-offs,
+failure scenarios, scalability considerations, and ASCII diagrams.
 
 ---
 
 ## 1. CQRS (Command Query Responsibility Segregation)
 
-### WHAT
-CQRS is an architectural pattern where **write operations (Commands)** and **read operations (Queries)** are handled by **separate models**.
-Instead of using a single data model for both reading and writing, CQRS explicitly splits them.
+CQRS separates write operations (commands) from read operations (queries).
+A command modifies system state but does not return data, while a query returns data without modifying state.
+This separation allows independent optimization of read and write workloads, which is essential in large-scale systems.
 
-### WHY
-In many systems, read and write workloads are very different.
-Reads are often frequent and simple, while writes are less frequent but involve complex validation and business rules.
-CQRS allows independent scaling, optimized read models, and cleaner domain logic.
+### Key Concepts
+- Commands enforce business rules
+- Queries are optimized for fast reads
+- Read and write models are independent
+- Eventual consistency is common
 
-### HOW
-The command side validates requests and updates state, while the query side serves optimized read views.
-Data is synchronized using events or projections.
-
+### Diagram
 ```
 Client
-  |---- Command ----> Command Model ----> Write DB
-  |---- Query ------> Query Model ------> Read DB
+  |---- Command ----> Command Handler ----> Write DB
+  |
+  |---- Query ------> Query Handler ------> Read DB
 ```
 
-### WHEN
-Use CQRS in systems with heavy read/write imbalance, complex domains, or audit requirements.
+### Use Cases
+- E-commerce platforms
+- Financial systems
+- Audit-heavy systems
 
 ---
 
 ## 2. Orchestration Architecture
 
-### WHAT
-Orchestration architecture uses a **central orchestrator** to control interactions between services.
+Orchestration architecture uses a centralized controller to manage workflows across multiple services.
+The orchestrator explicitly defines execution order, retries, and compensations.
 
-### WHY
-It provides centralized workflow control, clear visibility, and simplified error handling.
-
-### HOW
-The orchestrator invokes services in sequence and manages retries or compensations.
-
+### Diagram
 ```
+Client
+   |
 Orchestrator
    |--> Service A
    |--> Service B
    |--> Service C
 ```
 
-### WHEN
-Use orchestration for complex workflows such as order processing or payment flows.
+### Use Cases
+- Order fulfillment
+- Payment processing
+- Insurance workflows
 
 ---
 
-## 3. MVP (Model–View–Presenter) Architecture
+## 3. MVP (Model–View–Presenter)
 
-### WHAT
-MVP separates UI rendering, presentation logic, and data handling.
+MVP separates UI rendering from business logic and user interactions.
+The Presenter handles logic, while the View remains passive.
 
-### WHY
-It improves testability and separation of concerns.
-
-### HOW
-The Presenter mediates between View and Model.
-
+### Diagram
 ```
 View <--> Presenter <--> Model
 ```
 
-### WHEN
-Best for UI-heavy or legacy applications.
+### Use Cases
+- Android applications
+- Desktop software
 
 ---
 
-## 4. Event‑Driven Architecture
+## 4. Event-Driven Architecture
 
-### WHAT
-Event-driven architecture enables communication via events rather than direct calls.
+Event-driven systems communicate through events instead of direct calls.
+This enables loose coupling and high scalability.
 
-### WHY
-It enables loose coupling, scalability, and asynchronous processing.
-
-### HOW
-Producers emit events, brokers distribute them, and consumers react independently.
-
+### Diagram
 ```
 Producer --> Event Bus --> Consumer A
                          --> Consumer B
 ```
 
-### WHEN
-Use in microservices, real-time systems, and high-throughput platforms.
-
 ---
 
-## 5. Domain‑Driven Design (DDD)
+## 5. Domain-Driven Design (DDD)
 
-### WHAT
-DDD focuses on modeling software around business domains.
+DDD models software around business domains using bounded contexts.
+It aligns code structure with business terminology.
 
-### WHY
-It manages complexity and aligns code with business logic.
-
-### HOW
-Bounded contexts, entities, value objects, and aggregates are used.
-
+### Diagram
 ```
 [ Bounded Context A ]   [ Bounded Context B ]
 ```
 
-### WHEN
-Use for large enterprise systems with complex business rules.
-
 ---
 
-## 6. Space‑Based Architecture
+## 6. Space-Based Architecture
 
-### WHAT
-Space-based architecture uses in-memory data grids to eliminate database bottlenecks.
+Space-based architecture uses distributed in-memory data grids to avoid database bottlenecks.
 
-### WHY
-It enables low latency and massive scalability.
-
-### HOW
-Data and processing are distributed across nodes.
-
+### Diagram
 ```
 Load Balancer
    |
 Processing Node (Data + Logic)
 ```
 
-### WHEN
-Use for high-traffic, real-time systems.
-
 ---
 
 ## 7. Microservices Architecture
 
-### WHAT
-Microservices architecture splits systems into independently deployable services.
+Microservices break applications into independent services.
 
-### WHY
-It enables scalability, fault isolation, and team autonomy.
-
-### HOW
-Services communicate via APIs or events, often through an API Gateway.
-
+### Diagram
 ```
 Client -> API Gateway -> Service A
                       -> Service B
 ```
 
-### WHEN
-Use for large-scale systems with multiple teams.
-
 ---
 
-## 8. Microkernel (Plugin) Architecture
+## 8. Microkernel Architecture
 
-### WHAT
-Microkernel architecture consists of a core system with plug-in extensions.
+Microkernel architecture consists of a core system with plugin extensions.
 
-### WHY
-It enables extensibility and customization.
-
-### HOW
-The core handles common logic while plugins add features.
-
+### Diagram
 ```
 Core System
    |
- Plugins (A, B, C)
+ Plugins
 ```
-
-### WHEN
-Used in IDEs, payment platforms, and extensible products.
 
 ---
 
-## 9. Layered / N‑Tier Architecture
+## 9. Layered Architecture
 
-### WHAT
-Layered architecture divides systems into logical layers.
+Layered architecture separates concerns into layers.
 
-### WHY
-It simplifies development and enforces separation of concerns.
-
-### HOW
-Each layer communicates only with adjacent layers.
-
+### Diagram
 ```
-UI -> Business -> Data
+UI
+ |
+Business
+ |
+Data
 ```
-
-### WHEN
-Best for small to medium monolithic applications.
 
 ---
 
 ## Conclusion
 
-These architecture patterns form the foundation of system design.
-Understanding their trade-offs helps you design scalable systems and perform well in interviews.
+These patterns form the foundation of modern system design.
